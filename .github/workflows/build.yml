@@ -33,6 +33,7 @@ jobs:
           run: |
             mkdir /work/output
             ls -l
+            pwd
             find /work -type f -name \*.typ -exec sh -c "echo {} | sed -e 's/\.typ/.pdf/g' -e 'sd^./ddg' -e 'sd/d_dg' -e 's#^#/work/output/#g' | xargs typst compile {}" \;
       - name: Create artifacts
         uses: actions/upload-artifact@v3
