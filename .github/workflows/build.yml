@@ -32,11 +32,11 @@ jobs:
           options: -v ${{ github.workspace }}:/root/work
           run: |
             cd ./work
-            mkdir output
-            ls -l
-            find -type f -name \*.typ -exec sh -c "echo {} | sed -e 's/\.typ/.pdf/g' -e 'sd^./ddg' -e 'sd/d_dg' -e 's#^#./output/#g' | xargs typst compile {}" \;
+            find -type d -not -path "./output/*" -exec mkdir -p output/{} \;
+            ls -lR
+            find -type f -name \*.typ -exec sh -c "echo {} | sed -e 's/\.typ/.pdf/g' -e 's#^\./#./output/#g' | xargs typst compile {}" \;
       - name: Create artifacts
         uses: actions/upload-artifact@v3
         with:
           name: pdfs
-          path: output/*.pdf
+          path: output/**/*.pdf
