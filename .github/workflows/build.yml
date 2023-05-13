@@ -29,12 +29,12 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: ghcr.io/typst/typst:latest
-          options: -v /:/work
+          options: -v /:/root/work
           run: |
-            mkdir /work/output
+            cd ./work
+            mkdir output
             ls -l
-            pwd
-            find /work -type f -name \*.typ -exec sh -c "echo {} | sed -e 's/\.typ/.pdf/g' -e 'sd^./ddg' -e 'sd/d_dg' -e 's#^#/work/output/#g' | xargs typst compile {}" \;
+            find -type f -name \*.typ -exec sh -c "echo {} | sed -e 's/\.typ/.pdf/g' -e 'sd^./ddg' -e 'sd/d_dg' -e 's#^#./output/#g' | xargs typst compile {}" \;
       - name: Create artifacts
         uses: actions/upload-artifact@v3
         with:
